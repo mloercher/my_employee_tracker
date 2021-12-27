@@ -14,7 +14,7 @@ const db = sql.createConnection({
   host: "localhost",
   user: "root",
   password: process.env.DB_PASSWORD,
-  database: "tracker_db"
+  database: "tracker_db",
 });
 
 //***END OF REQUIREMENTS/CONNECTION________________
@@ -77,36 +77,37 @@ const viewAllDepartments = () => {
   const sql = `SELECT * FROM departments`;
   db.query(sql, (err, rows) => {
     if (err) {
-      console.log(err)
+      console.log(err);
       return;
     }
-    console.table(rows)
+    console.table(rows);
   });
   mainPromptUser();
 };
 
 const viewAllRoles = () => {
   console.log("Viewing Roles");
-  const sql = `SELECT * FROM roles`;
+  const sql = `SELECT * FROM roles JOIN departments WHERE roles.department_id = departments.id`;
   db.query(sql, (err, rows) => {
     if (err) {
-      console.log(err)
+      console.log(err);
       return;
     }
-    console.table(rows)
+    console.table(rows);
   });
   mainPromptUser();
 };
 
 const viewAllEmployees = () => {
   console.log("Viewing Employees");
-    const sql = `SELECT * FROM employees`;
-    db.query(sql, (err, rows) => {
-      if (err) {
-        console.log(err)
-        return;
-      }
-      console.table(rows)
+  const sql = `SELECT * FROM employees JOIN roles WHERE employees.role_id = roles.id`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log("-------")
+    console.table(rows);
   });
   mainPromptUser();
 };
@@ -114,61 +115,114 @@ const viewAllEmployees = () => {
 //ADD Functions_______________________________________****CHANGE PATHWAYS + LITERALS****
 function addDepartment() {
   console.log("Adding Department");
-    const sql = `INSERT INTO departments (name)
-    VALUES ("Sales");`;
-    db.query(sql, (err, rows) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-        return;
-      }
-      console.table(rows)
-  });
-  mainPromptUser();
+  inquirer
+    .prompt({
+      type: "input",
+      name: "departmentName",
+      message: "What is the name of the department?",
+    })
+    .then((answer) => {
+      const sql = `INSERT INTO departments (name)
+    VALUES ("${answer.departmentName}");`;
+      db.query(sql, (err, rows) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log("Successfully added department");
+        mainPromptUser();
+      });
+    });
 }
 
 function addRole() {
   console.log("Adding Role");
-    const sql = `INSERT INTO role (title, salary, department_id)
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "roleTitle",
+        message: "What is the Role you would like to add?",
+      },
+      {
+        type: "input",
+        name: "roleSalary",
+        message: "What is the salary of this role?",
+      },
+      {
+        type: "input",
+        name: "roleDeptId",
+        message: "What is the department id of this role?",
+      },
+    ])
+    .then((answer) => {
+      const sql = `INSERT INTO roles (title, salary, department_id)
     VALUES
-      ('fdf',"100000", NULL);`;
-    db.query(sql, (err, rows) => {
-      if (err) {
-        console.log(err)
-        return;
-      }
-      console.table(rows)
-  });
-  mainPromptUser();
+      ("${answer.roleTitle}","${answer.roleSalary}","${answer.roleDeptId}")`;
+      db.query(sql, (err, rows) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log("Successfully added Role info");
+        mainPromptUser();
+      });
+    });
 }
 
 function addEmployee() {
   console.log("Adding Employee");
-    const sql = `INSERT INTO role (title, salary, department_id)
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "empFirst",
+        message: "What is employee's first name?",
+      },
+      {
+        type: "input",
+        name: "empLast",
+        message: "What is employee's last name?",
+      },
+      {
+        type: "input",
+        name: "empId",
+        message: "What is the role id of this employee?",
+      },
+      {
+        type: "input",
+        name: "empMgrId",
+        message: "What is the manager id of this employee?",
+      },
+    ])
+    .then((answer) => {
+      const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id)
     VALUES
-      ('fdf',"100000", NULL);`;
-    db.query(sql, (err, rows) => {
-      if (err) {
-        console.log(err)
-        return;
-      }
-      console.table(rows)
-  });
-  mainPromptUser();
+      ("${answer.empFirst}","${answer.empLast}","${answer.empId}","${answer.empMgrId}")`;
+      db.query(sql, (err, rows) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log("successfully added employee info");
+        mainPromptUser();
+      });
+    });
 }
 
 //UPDATE Function______________________________________****CHANGE PATHWAYS + LITERALS****
 function updateEmployeeRole() {
   console.log("Updating Employee Role");
-  
-    const sql = `INSERT INTO role (title, salary, department_id)
+
+  const sql = `INSERT INTO role (title, salary, department_id)
     VALUES
       ('fdf',"100000", NULL);`;
-    db.query(sql, (err, rows) => {
-      if (err) {
-        console.log(err)
-        return;
-      }
-      console.table(rows)
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.table(rows);
   });
   mainPromptUser();
-};
+}
