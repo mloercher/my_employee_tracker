@@ -8,12 +8,13 @@ const express = require("express");
 const app = express();
 //Express middleware
 app.use(express.urlencoded({ extended: false }));
+
 //Connect to SQL database
-const connection = sql.createConnection({
+const db = sql.createConnection({
   host: "localhost",
-  name: process.env.DB_NAME,
   user: "root",
   password: process.env.DB_PASSWORD,
+  database: "tracker_db"
 });
 
 //***END OF REQUIREMENTS/CONNECTION________________
@@ -60,7 +61,8 @@ const mainPromptUser = () => {
           updateEmployeeRole();
           break;
         case "nothing":
-          connection.end();
+          console.log("Finished making changes to Employee data");
+          db.end();
           break;
       }
     });
@@ -72,54 +74,39 @@ mainPromptUser();
 //VIEW ALL Functions(GET)________________________________****CHANGE PATHWAYS + LITERALS****
 const viewAllDepartments = () => {
   console.log("Viewing Departments");
-  app.get("/api/departments", (req, res) => {
-    const sql = `SELECT * FROM deparments`;
-    db.query(sql, (err, rows) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-        return;
-      }
-      res.json({
-        message: "Success!",
-        data: rows,
-      });
-    });
+  const sql = `SELECT * FROM departments`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err)
+      return;
+    }
+    console.table(rows)
   });
   mainPromptUser();
 };
 
 const viewAllRoles = () => {
-  console.log("Viewing Departments");
-  app.get("/api/departments", (req, res) => {
-    const sql = `SELECT * FROM deparments`;
-    db.query(sql, (err, rows) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-        return;
-      }
-      res.json({
-        message: "Success!",
-        data: rows,
-      });
-    });
+  console.log("Viewing Roles");
+  const sql = `SELECT * FROM roles`;
+  db.query(sql, (err, rows) => {
+    if (err) {
+      console.log(err)
+      return;
+    }
+    console.table(rows)
   });
   mainPromptUser();
 };
 
 const viewAllEmployees = () => {
   console.log("Viewing Employees");
-  app.get("/api/departments", (req, res) => {
-    const sql = `SELECT * FROM deparments`;
+    const sql = `SELECT * FROM employees`;
     db.query(sql, (err, rows) => {
       if (err) {
-        res.status(500).json({ error: err.message });
+        console.log(err)
         return;
       }
-      res.json({
-        message: "Success!",
-        data: rows,
-      });
-    });
+      console.table(rows)
   });
   mainPromptUser();
 };
@@ -127,7 +114,6 @@ const viewAllEmployees = () => {
 //ADD Functions_______________________________________****CHANGE PATHWAYS + LITERALS****
 function addDepartment() {
   console.log("Adding Department");
-  app.post("", (req, res) => {
     const sql = `INSERT INTO departments (name)
     VALUES ("Sales");`;
     db.query(sql, (err, rows) => {
@@ -135,77 +121,54 @@ function addDepartment() {
         res.status(500).json({ error: err.message });
         return;
       }
-      res.json({
-        message: "Success!",
-        data: rows,
-      });
-    });
+      console.table(rows)
   });
   mainPromptUser();
 }
 
 function addRole() {
   console.log("Adding Role");
-  app.post("", (req, res) => {
     const sql = `INSERT INTO role (title, salary, department_id)
     VALUES
       ('fdf',"100000", NULL);`;
     db.query(sql, (err, rows) => {
       if (err) {
-        res.status(500).json({ error: err.message });
+        console.log(err)
         return;
       }
-      res.json({
-        message: "Success!",
-        data: rows,
-      });
-    });
+      console.table(rows)
   });
   mainPromptUser();
 }
 
 function addEmployee() {
   console.log("Adding Employee");
-  app.post("", (req, res) => {
     const sql = `INSERT INTO role (title, salary, department_id)
     VALUES
       ('fdf',"100000", NULL);`;
     db.query(sql, (err, rows) => {
       if (err) {
-        res.status(500).json({ error: err.message });
+        console.log(err)
         return;
       }
-      res.json({
-        message: "Success!",
-        data: rows,
-      });
-    });
+      console.table(rows)
   });
   mainPromptUser();
 }
 
 //UPDATE Function______________________________________****CHANGE PATHWAYS + LITERALS****
 function updateEmployeeRole() {
-  console.log("Adding Employee");
-  app.put("", (req, res) => {
+  console.log("Updating Employee Role");
+  
     const sql = `INSERT INTO role (title, salary, department_id)
     VALUES
       ('fdf',"100000", NULL);`;
     db.query(sql, (err, rows) => {
       if (err) {
-        res.status(500).json({ error: err.message });
+        console.log(err)
         return;
       }
-      res.json({
-        message: "Success!",
-        data: rows,
-      });
-    });
+      console.table(rows)
   });
   mainPromptUser();
-}
-
-//start express server on PORT 3001
-app.listen(PORT, () => {
-  console.log(`Server running on ${PORT}`);
-});
+};
