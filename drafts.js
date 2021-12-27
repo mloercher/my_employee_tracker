@@ -1,100 +1,3 @@
-const inquirer = require("inquirer");
-const mysql2 = require("mysql2");
-require("dotenv").config();
-require("console.table");
-
-const connection = mysql2.createConnection({
-  host: "localhost",
-  user: "root",
-  password: process.env.DB_PASSWORD,
-});
-
-//First, MAIN prompt______________________________
-const mainPromptUser = () => {
-  return inquirer
-    .prompt({
-      type: "list",
-      name: "action",
-      message: "What would you like to do?",
-      choices: [
-        "view all departments",
-        "view all roles",
-        "view all employees",
-        "add a department",
-        "add a role",
-        "add an employee",
-        "update an employee role",
-        "nothing",
-      ],
-    })
-    .then(function ({ action }) {
-      switch (action) {
-        case "view all departments":
-          viewAllDepartments();
-          break;
-        case "view all roles":
-          viewAllRoles();
-          break;
-        case "view all employees":
-          viewAllEmployees();
-          break;
-        case "add a department":
-          addDepartment();
-          break;
-        case "add a role":
-          addRole();
-          break;
-        case "add an employee":
-          addEmployee();
-          break;
-        case "update an employee role":
-          updateEmployeeRole();
-          break;
-        case "nothing":
-          connection.end();
-          break;
-      }
-    });
-};
-
-//START prompts
-mainPromptUser();
-
-//VIEW ALL Functions________________________________
-function viewAllDepartments() {
-  console.log("Viewing Departments");
-  mainPromptUser();
-}
-function viewAllRoles() {
-  console.log("Viewing Roles");
-  mainPromptUser();
-}
-function viewAllEmployees() {
-  console.log("Viewing Employees");
-  mainPromptUser();
-}
-
-//ADD Functions_______________________________________
-function addDepartment() {
-  console.log("Adding Department")
-  mainPromptUser();
-}
-function addRole() {
-  console.log("Adding Role")
-  mainPromptUser();
-}
-function addEmployee() {
-  console.log("Adding Employee")
-  mainPromptUser();
-}
-
-//UPDATE Function_________________
-function updateEmployeeRole() {
-  console.log("Updating Employee")
-  mainPromptUser();
-}
-
-
 // const promptUser = () => {
 //   return inquirer.prompt([
 //     {
@@ -123,14 +26,14 @@ function updateEmployeeRole() {
 //       name: "roleSalary",
 //       message: "What is the salary of the role?",
 //       choices: [
-//         "$80,000",
-//         "$100,000",
-//         "$120,000",
-//         "$125,000",
-//         "$150,000",
-//         "$160,000",
-//         "$190,000",
-//         "$250,000",
+//         "80000",
+//         "100000",
+//         "120000",
+//         "125000",
+//         "150000",
+//         "160000",
+//         "190000",
+//         "250000",
 //       ],
 //     },
 //     {
