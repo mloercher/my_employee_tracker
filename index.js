@@ -80,9 +80,10 @@ const viewAllDepartments = () => {
       console.log(err);
       return;
     }
+    console.log("-------");
     console.table(rows);
+    mainPromptUser();
   });
-  mainPromptUser();
 };
 
 const viewAllRoles = () => {
@@ -93,9 +94,10 @@ const viewAllRoles = () => {
       console.log(err);
       return;
     }
+    console.log("-------");
     console.table(rows);
+    mainPromptUser();
   });
-  mainPromptUser();
 };
 
 const viewAllEmployees = () => {
@@ -106,13 +108,13 @@ const viewAllEmployees = () => {
       console.log(err);
       return;
     }
-    console.log("-------")
+    console.log("-------");
     console.table(rows);
+    mainPromptUser();
   });
-  mainPromptUser();
 };
 
-//ADD Functions_______________________________________****CHANGE PATHWAYS + LITERALS****
+//ADD Functions_______________________________________
 function addDepartment() {
   console.log("Adding Department");
   inquirer
@@ -123,13 +125,14 @@ function addDepartment() {
     })
     .then((answer) => {
       const sql = `INSERT INTO departments (name)
-    VALUES ("${answer.departmentName}");`;
+    VALUES ("${answer.departmentName}")`;
       db.query(sql, (err, rows) => {
         if (err) {
           console.log(err);
           return;
         }
-        console.log("Successfully added department");
+        console.log("-------");
+        console.table(rows);
         mainPromptUser();
       });
     });
@@ -164,7 +167,8 @@ function addRole() {
           console.log(err);
           return;
         }
-        console.log("Successfully added Role info");
+        console.log("-------");
+        console.table(rows);
         mainPromptUser();
       });
     });
@@ -204,7 +208,8 @@ function addEmployee() {
           console.log(err);
           return;
         }
-        console.log("successfully added employee info");
+        console.log("-------");
+        console.table(rows);
         mainPromptUser();
       });
     });
@@ -213,16 +218,30 @@ function addEmployee() {
 //UPDATE Function______________________________________****CHANGE PATHWAYS + LITERALS****
 function updateEmployeeRole() {
   console.log("Updating Employee Role");
-
-  const sql = `INSERT INTO role (title, salary, department_id)
-    VALUES
-      ('fdf',"100000", NULL);`;
-  db.query(sql, (err, rows) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    console.table(rows);
-  });
-  mainPromptUser();
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        name: "updateEmp",
+        message:
+          "Which employee's role would you like to update? (enter employee id)",
+      },
+      {
+        type: "input",
+        name: "updateEmpRole",
+        message: "What is the employee's new role id?",
+      },
+    ])
+    .then((answer) => {
+      const sql = `UPDATE employees SET ? WHERE ?, VALUES [{ role_id: "${answer.roleDeptId}", { id: ${answer.updateEmpRole}]`;
+      db.query(sql, (err, rows) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        console.log("-------");
+        console.table(rows);
+        mainPromptUser();
+      });
+    });
 }
