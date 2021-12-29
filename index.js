@@ -69,9 +69,12 @@ const mainPromptUser = () => {
 };
 
 //START prompts
+console.log("------------------");
+console.log(" EMPLOYEE TRACKER ");
+console.log("------------------");
 mainPromptUser();
 
-//VIEW ALL Functions(GET)________________________________****CHANGE PATHWAYS + LITERALS****
+//VIEW ALL Functions________________________________****CHANGE PATHWAYS + LITERALS****
 const viewAllDepartments = () => {
   console.log("Viewing Departments");
   const sql = `SELECT * FROM departments`;
@@ -80,7 +83,9 @@ const viewAllDepartments = () => {
       console.log(err);
       return;
     }
-    console.log("-------");
+    console.log("-------------------------");
+    console.log(" VIEWING ALL DEPARTMENTS ");
+    console.log("-------------------------");
     console.table(rows);
     mainPromptUser();
   });
@@ -94,7 +99,9 @@ const viewAllRoles = () => {
       console.log(err);
       return;
     }
-    console.log("-------");
+    console.log("-------------------");
+    console.log(" VIEWING ALL ROLES ");
+    console.log("-------------------");
     console.table(rows);
     mainPromptUser();
   });
@@ -108,7 +115,9 @@ const viewAllEmployees = () => {
       console.log(err);
       return;
     }
-    console.log("-------");
+    console.log("-----------------------");
+    console.log(" VIEWING ALL EMPLOYEES ");
+    console.log("-----------------------");
     console.table(rows);
     mainPromptUser();
   });
@@ -131,7 +140,9 @@ function addDepartment() {
           console.log(err);
           return;
         }
-        console.log("-------");
+        console.log("-----------------------");
+        console.log("   DEPARTMENT ADDED    ");
+        console.log("-----------------------");
         console.table(rows);
         mainPromptUser();
       });
@@ -167,7 +178,9 @@ function addRole() {
           console.log(err);
           return;
         }
-        console.log("-------");
+        console.log("-----------------------");
+        console.log("       ROLE ADDED      ");
+        console.log("-----------------------");
         console.table(rows);
         mainPromptUser();
       });
@@ -202,13 +215,15 @@ function addEmployee() {
     .then((answer) => {
       const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id)
     VALUES
-      ("${answer.empFirst}","${answer.empLast}","${answer.empId}","${answer.empMgrId}")`;
+      ("${answer.empFirst}","${answer.empLast}",${answer.empId},${answer.empMgrId})`;
       db.query(sql, (err, rows) => {
         if (err) {
           console.log(err);
           return;
         }
-        console.log("-------");
+        console.log("------------------");
+        console.log("  EMPLOYEE ADDED  ");
+        console.log("------------------");
         console.table(rows);
         mainPromptUser();
       });
@@ -222,7 +237,7 @@ function updateEmployeeRole() {
     .prompt([
       {
         type: "input",
-        name: "updateEmp",
+        name: "selectUpdateEmp",
         message:
           "Which employee's role would you like to update? (enter employee id)",
       },
@@ -233,13 +248,15 @@ function updateEmployeeRole() {
       },
     ])
     .then((answer) => {
-      const sql = `UPDATE employees SET ? WHERE ?, VALUES [{ role_id: "${answer.roleDeptId}", { id: ${answer.updateEmpRole}]`;
+      const sql = `INSERT INTO employees SET role_id = '${answer.updateEmpRole}' WHERE id = '${answer.selectUpdateEmp}'`;
       db.query(sql, (err, rows) => {
         if (err) {
           console.log(err);
           return;
         }
-        console.log("-------");
+        console.log("--------------------");
+        console.log("  EMPLOYEE UPDATED  ");
+        console.log("--------------------");
         console.table(rows);
         mainPromptUser();
       });
