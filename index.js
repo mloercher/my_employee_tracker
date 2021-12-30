@@ -209,13 +209,12 @@ function addEmployee() {
       {
         type: "input",
         name: "empMgrId",
-        message: "What is the manager id of this employee?",
+        message: "What is the id number of this employee's manager?",
       },
     ])
     .then((answer) => {
-      const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id)
-    VALUES
-      ("${answer.empFirst}","${answer.empLast}",${answer.empId},${answer.empMgrId})`;
+      const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id) 
+      VALUES ("${answer.empFirst}", "${answer.empLast}", ${answer.empId}, ${answer.empMgrId})`;
       db.query(sql, (err, rows) => {
         if (err) {
           console.log(err);
@@ -248,7 +247,7 @@ function updateEmployeeRole() {
       },
     ])
     .then((answer) => {
-      const sql = `INSERT INTO employees SET role_id = '${answer.updateEmpRole}' WHERE id = '${answer.selectUpdateEmp}'`;
+      const sql = `UPDATE employees SET role_id = '${answer.updateEmpRole}' WHERE id = '${answer.selectUpdateEmp}'`;
       db.query(sql, (err, rows) => {
         if (err) {
           console.log(err);
