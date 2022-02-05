@@ -1,8 +1,6 @@
 # MY_EMPLOYEE_TRACKER
 
-Use Content Management system to create your team and organize employee data. Inquirer prompts ask the user questions to describe their employees and the positions they hold. Field for entry include: employee first name, employee last name, department name, role title, manager id and salary. After cloning, app can be initialized by entering 'node index' in terminal. 
-
-Because this application won’t be deployed, you’ll also need to create a walkthrough video that demonstrates its functionality and all of the following acceptance criteria being met. You’ll need to submit a link to the video and add it to the README of your project.
+MY_EMPLOYEE_TRACKER is CLI program to build, edit and view your company's employees and department structure. Users can add employees, departments and roles as well as edit current ones. 
 
 ## User Story
 
@@ -12,12 +10,10 @@ I WANT to be able to view and manage the departments, roles, and employees in my
 SO THAT I can organize and plan my business
 ```
 
+## Screen Shots
 
-## Mock-Up
-
-The following video shows an example of the application being used from the command line:
-
-[![A video thumbnail shows the command-line employee management application with a play button overlaying the view.](./Assets/12-sql-homework-video-thumbnail.png)](https://2u-20.wistia.com/medias/2lnle7xnpk)
+![CLI-starting-point](start.png)
+![View-all-depts](depts.png)
 
 ## Getting Started
 
