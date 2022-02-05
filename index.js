@@ -74,7 +74,7 @@ console.log(" EMPLOYEE TRACKER ");
 console.log("------------------");
 mainPromptUser();
 
-//VIEW ALL Functions________________________________****CHANGE PATHWAYS + LITERALS****
+//VIEW ALL DEPTS________________________________
 const viewAllDepartments = () => {
   console.log("Viewing Departments");
   const sql = `SELECT * FROM departments`;
@@ -90,7 +90,7 @@ const viewAllDepartments = () => {
     mainPromptUser();
   });
 };
-
+//VIEW ALL ROLES___________________________________
 const viewAllRoles = () => {
   console.log("Viewing Roles");
   const sql = `SELECT * FROM roles JOIN departments WHERE roles.department_id = departments.id`;
@@ -106,7 +106,7 @@ const viewAllRoles = () => {
     mainPromptUser();
   });
 };
-
+//VIEW ALL EMPLOYEES___________________________________
 const viewAllEmployees = () => {
   console.log("Viewing Employees");
   const sql = `SELECT * FROM employees JOIN roles WHERE employees.role_id = roles.id`;
@@ -123,7 +123,7 @@ const viewAllEmployees = () => {
   });
 };
 
-//ADD Functions_______________________________________
+//ADD DEPT Function_______________________________________
 function addDepartment() {
   console.log("Adding Department");
   inquirer
@@ -148,7 +148,7 @@ function addDepartment() {
       });
     });
 }
-
+//ADD ROLE function______________________________________________
 function addRole() {
   console.log("Adding Role");
   inquirer
@@ -172,7 +172,7 @@ function addRole() {
     .then((answer) => {
       const sql = `INSERT INTO roles (title, salary, department_id)
     VALUES
-      ("${answer.roleTitle}","${answer.roleSalary}","${answer.roleDeptId}")`;
+      ("${answer.roleTitle}",${answer.roleSalary},${answer.roleDeptId})`;
       db.query(sql, (err, rows) => {
         if (err) {
           console.log(err);
@@ -186,7 +186,7 @@ function addRole() {
       });
     });
 }
-
+//ADD EMPLOYEE function______________________________________________
 function addEmployee() {
   console.log("Adding Employee");
   inquirer
@@ -213,7 +213,9 @@ function addEmployee() {
       },
     ])
     .then((answer) => {
-      const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id) 
+  
+      const sql = 
+      `INSERT INTO employees (first_name, last_name, role_id, manager_id) 
       VALUES ("${answer.empFirst}", "${answer.empLast}", ${answer.empId}, ${answer.empMgrId})`;
       db.query(sql, (err, rows) => {
         if (err) {
@@ -229,7 +231,7 @@ function addEmployee() {
     });
 }
 
-//UPDATE Function______________________________________****CHANGE PATHWAYS + LITERALS****
+//UPDATE Function______________________________________
 function updateEmployeeRole() {
   console.log("Updating Employee Role");
   inquirer
