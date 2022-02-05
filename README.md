@@ -12,8 +12,8 @@ SO THAT I can organize and plan my business
 
 ## Screen Shots
 
-![CLI-starting-point](start.png)
-![View-all-depts](depts.png)
+![CLI-starting-point](./assets/start.png)
+![View-all-depts](./assets/depts.png)
 
 ## Demo
 https://share.vidyard.com/watch/yxnVNV7g3ebBUtToB8PhML?
