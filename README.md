@@ -1,6 +1,6 @@
 # MY_EMPLOYEE_TRACKER
 
-MY_EMPLOYEE_TRACKER is CLI program to build, edit and view your company's employees and department structure. Users can add employees, departments and roles as well as edit current ones. 
+MY_EMPLOYEE_TRACKER is a CLI program to build, edit and view your company's employees and department structure. Users can add employees, departments and roles as well as edit current ones. 
 
 ## User Story
 
